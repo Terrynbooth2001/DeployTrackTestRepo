@@ -5,6 +5,12 @@ inventory = {}
 def get_items():
     return jsonify(list(inventory.values()))
 
+@app.route('/items/<item_id>', methods=['GET'])
+def get_item(item_id):
+    if item_id not in inventory:
+        return jsonify({"error": "Not found"}), 404
+    return jsonify(inventory[item_id])
+
 @app.route('/items', methods=['POST'])
 def add_item():
     data = request.json
